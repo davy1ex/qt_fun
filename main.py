@@ -89,10 +89,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.addToolBar(NavigationToolbar(self.widget_2.canvas, self))
 
     def plot(self, hour, temperature):
-        self.graphWidget.plot(hour, temperature)
         t = np.arange(100)
         s = np.sin(0.15*2*np.pi*t)
-
+        S = np.fft.fft(s)
+        S_mag = np.abs(S)
+        S_phase = np.angle(S)
+        self.widget_1.canvas.axes.plot(t,S_mag,'.-')
+        self.widget_1.canvas.axes.plot(t,S_phase,'.-')
+        
         self.widget_2.canvas.axes.clear()
         self.widget_2.canvas.axes.plot(t, s)
         self.widget_2.canvas.axes.legend(('cosinus', 'sinus'),loc='upper right')
