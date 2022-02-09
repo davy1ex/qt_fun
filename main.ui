@@ -62,9 +62,20 @@
      <number>24</number>
     </property>
    </widget>
+   <widget class="PlotWidget" name="graphWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>381</width>
+      <height>221</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>horizontalScrollBar</zorder>
    <zorder>progressBar</zorder>
    <zorder>label</zorder>
+   <zorder>graphWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -78,6 +89,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header>pyqtgraph</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
