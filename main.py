@@ -84,24 +84,32 @@ class MainWindow(QtWidgets.QMainWindow):
 
         #Load the UI Page
         uic.loadUi('main.ui', self)
+        self.addToolBar(NavigationToolbar(self.widget_1.canvas, self))
+       
 
-        self.plot([1,2,3,4,5,6,7,8,9,10], [30,32,34,32,33,31,29,32,35,45])
-        self.addToolBar(NavigationToolbar(self.widget_2.canvas, self))
+    
+        Fs = 1 # Hz
+        N = 100 # number of points to simulate, and our FFT size
 
-    def plot(self, hour, temperature):
-        t = np.arange(100)
+        t = np.arange(N) # because our sample rate is 1 Hz
         s = np.sin(0.15*2*np.pi*t)
-        S = np.fft.fft(s)
+        S = np.fft.fftshift(np.fft.fft(s))
         S_mag = np.abs(S)
         S_phase = np.angle(S)
-        self.widget_1.canvas.axes.plot(t,S_mag,'.-')
-        self.widget_1.canvas.axes.plot(t,S_phase,'.-')
+        f = np.arange(Fs/-2, Fs/2, Fs/N)
+        # plt.figure(0)
+        # plt.plot(f, S_mag,'.-')
+        # plt.figure(1)
+        # plt.plot(f, S_phase,'.-')
+        # plt.show()
+        self.widget_1.add_subplot(211)
+        self.widget_1.canvas.axes.plot(t, s)
         
-        self.widget_2.canvas.axes.clear()
-        self.widget_2.canvas.axes.plot(t, s)
-        self.widget_2.canvas.axes.legend(('cosinus', 'sinus'),loc='upper right')
-        self.widget_2.canvas.axes.set_title('Cosinus - Sinus Signal')
-        self.widget_2.canvas.draw()
+        self.widget_1.figure(1)
+        self.widget_1.canvas.axes.plot(f, S_mag,'.-')
+        
+        
+        self.widget_1.canvas.show()
 
 
 
