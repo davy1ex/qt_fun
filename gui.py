@@ -42,13 +42,19 @@ class MainApp(QtWidgets.QMainWindow):
 		self.resize(888, 600)
 		
 		self.canvas = MplCanvas(self, width=5, height=4, dpi=100)
-		self.ui.gridLayout_4.addWidget(self.canvas, 2, 1, 1, 1)
+		self.ui.gridLayout_4.addWidget(self.canvas, 0, 1)
+
+		self.canvas2 = MplCanvas(self, width=5, height=4, dpi=100)
+		self.ui.gridLayout_4.addWidget(self.canvas2, 1, 1)
 
 		self.interval = 30
-
+		
+		self.hs.valueChanged.connect(self.update_plot)
 		self.update_plot()
 		self.addToolBar(NavigationToolbar(self.canvas, self))
+		self.addToolBar(NavigationToolbar(self.canvas2, self))
 
+	
 		
 
 		
@@ -66,7 +72,13 @@ class MainApp(QtWidgets.QMainWindow):
 		t = np.arange(N) # because our sample rate is 1 Hz
 		s = np.sin(0.15*2*np.pi*t)
 		self.canvas.axes.plot(t, s)
+		print(self.hs.value())
+		self.canvas.axes.set_ylim( ymin=-0.5, ymax=self.hs.value())	
 		self.canvas.draw()
+		
+
+		self.canvas2.axes.plot(t, s)
+		self.canvas2.draw()
 
 
 
