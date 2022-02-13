@@ -1,2 +1,2 @@
 .\vevn\Scripts\activate
-python gui.py
+& python gui.py
